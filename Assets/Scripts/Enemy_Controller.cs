@@ -1,5 +1,4 @@
-﻿// Patrol.cs
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
 using UnityEngine.SceneManagement;

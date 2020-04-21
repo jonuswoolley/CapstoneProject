@@ -10,7 +10,8 @@ public class EnemyHit_Health : MonoBehaviour
     public LayerMask playerLayer;
 
     private float timestamp;
-    public float timeBetweenHits = 0.5f;
+    public float timeBetweenHits;
+    public float timeBeforeHits;
 
     // Update is called once per frame
     void Update()
@@ -19,6 +20,7 @@ public class EnemyHit_Health : MonoBehaviour
         {
             Collider[] hitPlayer = Physics.OverlapSphere(attackPoint.position, attackRange, playerLayer);
 
+            timestamp = Time.time + timeBeforeHits;
             foreach (Collider player in hitPlayer)
             {
                 if (player.CompareTag("Player"))
@@ -58,6 +60,8 @@ public class EnemyHit_Health : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            var dead = gameObject.GetComponent<enemyInView>();
+            dead.dead = true;
             Destroy(gameObject);
         }  
     }

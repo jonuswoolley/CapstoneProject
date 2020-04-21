@@ -77,6 +77,12 @@ public class PlayerHit_Health : MonoBehaviour
         }
     }
 
+    public void Heal()
+    {
+        currentHealth = maxHealth;
+        text.text = currentHealth.ToString();
+    }
+
     IEnumerator RotateImage()
     {
         float moveSpeed = 0.1f;
