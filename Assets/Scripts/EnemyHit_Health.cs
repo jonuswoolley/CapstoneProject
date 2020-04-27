@@ -60,8 +60,6 @@ public class EnemyHit_Health : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            var dead = gameObject.GetComponent<enemyInView>();
-            dead.dead = true;
             Destroy(gameObject);
         }  
     }

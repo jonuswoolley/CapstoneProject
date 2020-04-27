@@ -2,12 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerHit_Health : MonoBehaviour
 {
     public Text text;
 
-    public Camera cam;
+    public Material red;
+    public Material green;
+
+    public GameObject bottle1;
+    public GameObject bottle2;
+    public GameObject bottle3;
+    public GameObject bottle4;
+
+    //public Camera cam;
     public Transform attackPoint;
     public float attackRange = 3f;
     public int attackDamage = 40;
@@ -16,30 +25,20 @@ public class PlayerHit_Health : MonoBehaviour
     private float timestamp;
     public float timeBetweenHits = 0.5f;
 
-    //Quaternion startRot, endRot;
-
     // Update is called once per frame
     void Update()
     {
         if (Time.time >= timestamp && Input.GetMouseButtonDown(0))
         {
-            //startRot = Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0);
-            //endRot = Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0);
-
-            //StartCoroutine(RotateImage());
-            //transform.rotation = Quaternion.Slerp( transform.rotation, Quaternion.Euler(0 , Camera.main.transform.eulerAngles.y, 0), 10 * Time.time);
-
             Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
 
-            foreach(Collider enemy in hitEnemies)
+            foreach (Collider enemy in hitEnemies)
             {
                 enemy.GetComponent<EnemyHit_Health>().TakeDamage(attackDamage);
             }
             timestamp = Time.time + timeBetweenHits;
         }
 
-        //if (transform.rotation != endRot)
-            //transform.rotation = Quaternion.Slerp(startRot, endRot, Time.time * 10);
     }
 
     private void OnDrawGizmosSelected()
@@ -48,50 +47,69 @@ public class PlayerHit_Health : MonoBehaviour
         {
             return;
         }
-
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 
     //Player Health ------------------------------------------------------
 
     public int maxHealth = 100;
+    public int currentHealth;
 
-    int currentHealth;
-
-    // Start is called before the first frame update
     void Start()
     {
-        currentHealth = maxHealth;
+        currentHealth = PlayerPrefs.GetInt("Health");
         text.text = currentHealth.ToString();
+
+        //for when you go through the elevator
+        if (currentHealth < 80)
+            bottle1.GetComponent<Renderer>().material = red;
+        if (currentHealth < 60)
+            bottle2.GetComponent<Renderer>().material = red;
+        if (currentHealth < 40)
+            bottle3.GetComponent<Renderer>().material = red;
+        if (currentHealth < 20)
+            bottle4.GetComponent<Renderer>().material = red;
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        PlayerPrefs.SetInt("Health", currentHealth);
+
+        if (currentHealth < 80)
+            bottle1.GetComponent<Renderer>().material = red;
+        if (currentHealth < 60)
+            bottle2.GetComponent<Renderer>().material = red;
+        if (currentHealth < 40)
+            bottle3.GetComponent<Renderer>().material = red;
+        if (currentHealth < 20)
+            bottle4.GetComponent<Renderer>().material = red;
 
         text.text = currentHealth.ToString();
 
         if (currentHealth <= 0)
         {
-            Destroy(gameObject);
+            LoadGame();
         }
+    }
+
+    public void LoadGame()
+    {
+        Heal();
+        SceneManager.LoadScene(PlayerPrefs.GetInt("Level"));
+        print("Game loaded!");
     }
 
     public void Heal()
     {
+        //reset bottles to green
+        bottle1.GetComponent<Renderer>().material = green;
+        bottle2.GetComponent<Renderer>().material = green;
+        bottle3.GetComponent<Renderer>().material = green;
+        bottle4.GetComponent<Renderer>().material = green;
+
+        PlayerPrefs.SetInt("Health", maxHealth);
         currentHealth = maxHealth;
         text.text = currentHealth.ToString();
-    }
-
-    IEnumerator RotateImage()
-    {
-        float moveSpeed = 0.1f;
-        while (transform.rotation.y < Camera.main.transform.eulerAngles.y)
-        {
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0), moveSpeed * Time.time);
-            yield return null;
-        }
-        //transform.rotation = Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0);
-       // yield return null;
     }
 }

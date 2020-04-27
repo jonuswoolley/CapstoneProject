@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Enemy_Controller : MonoBehaviour
 {
-    public Transform player;
+    Transform player;
     public Transform[] points;
 
     private int destPoint = 0;
@@ -15,6 +15,8 @@ public class Enemy_Controller : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.FindWithTag("Player").transform;
+
         agent = GetComponent<NavMeshAgent>();
 
         // Disabling auto-braking allows for continuous movement

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Elevator : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class Elevator : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            SceneManager.LoadScene("MyScene");
+            SceneManager.LoadScene("TestRoom2");
         }
     }
 }

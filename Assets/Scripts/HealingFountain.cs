@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System;
 
 public class HealingFountain : MonoBehaviour
 {
@@ -17,8 +19,14 @@ public class HealingFountain : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            
-            heal.Heal();
+            SaveGame();
+            heal.Heal(); 
         }
+    }
+    public void SaveGame()
+    {
+        PlayerPrefs.SetInt("Level", SceneManager.GetActiveScene().buildIndex);
+        PlayerPrefs.Save();
+        print("Game saved!");
     }
 }
