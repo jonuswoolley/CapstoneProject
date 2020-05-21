@@ -71,15 +71,31 @@
     <Compile Include="Assets\Invector-3rdPersonController_LITE\Scripts\Generic\Utils\vComment.cs" />
     <Compile Include="Assets\Invector-3rdPersonController_LITE\Scripts\Generic\Utils\vExtensions.cs" />
     <Compile Include="Assets\Invector-3rdPersonController_LITE\Scripts\Generic\Utils\vPickupItem.cs" />
-    <Compile Include="Assets\Scripts\Elevator.cs" />
-    <Compile Include="Assets\Scripts\EnemyHit_Health.cs" />
-    <Compile Include="Assets\Scripts\Enemy_Controller.cs" />
+    <Compile Include="Assets\Scripts\BossFIght\BigBossCast.cs" />
+    <Compile Include="Assets\Scripts\BossFIght\BigBossHealth.cs" />
+    <Compile Include="Assets\Scripts\BossFIght\FireBallDmg.cs" />
+    <Compile Include="Assets\Scripts\BossFIght\HandColliderScript.cs" />
+    <Compile Include="Assets\Scripts\BossFIght\Pillars.cs" />
+    <Compile Include="Assets\Scripts\Doors&amp;Triggers\DestroyTrigger.cs" />
+    <Compile Include="Assets\Scripts\Doors&amp;Triggers\Elevator.cs" />
+    <Compile Include="Assets\Scripts\Doors&amp;Triggers\OpenDoor.cs" />
+    <Compile Include="Assets\Scripts\Doors&amp;Triggers\OpenExit.cs" />
+    <Compile Include="Assets\Scripts\Doors&amp;Triggers\TriggerBoxController.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyHit_Health.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Enemy_Controller.cs" />
+    <Compile Include="Assets\Scripts\GameController\BossFight\PillarCount.cs" />
+    <Compile Include="Assets\Scripts\GameController\CamSwitch.cs" />
+    <Compile Include="Assets\Scripts\GameController\NewGame.cs" />
+    <Compile Include="Assets\Scripts\GameController\PauseGame.cs" />
+    <Compile Include="Assets\Scripts\GameController\TextImporter.cs" />
     <Compile Include="Assets\Scripts\HealingFountain.cs" />
-    <Compile Include="Assets\Scripts\NewGame.cs" />
-    <Compile Include="Assets\Scripts\PlayerData.cs" />
+    <Compile Include="Assets\Scripts\HitBossFight.cs" />
+    <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\PlayerHit_Health.cs" />
-    <Compile Include="Assets\Scripts\SaveSystem.cs" />
+    <Compile Include="Assets\Scripts\Probably Not Going to use\PlayerData.cs" />
+    <Compile Include="Assets\Scripts\Probably Not Going to use\SaveSystem.cs" />
     <None Include="Assets\Invector-3rdPersonController_LITE\README_Basic.txt" />
+    <None Include="Assets\Scripts\TutorialText.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Jonus/Desktop/Skool/Unity/The Real Project 2001/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
@@ -100,6 +116,9 @@
     </Reference>
     <Reference Include="Unity.Rider.Editor">
       <HintPath>C:/Users/Jonus/Desktop/Skool/Unity/The Real Project 2001/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>C:/Users/Jonus/Desktop/Skool/Unity/The Real Project 2001/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>C:/Users/Jonus/Desktop/Skool/Unity/The Real Project 2001/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>

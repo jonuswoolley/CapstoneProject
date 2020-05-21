@@ -5,15 +5,24 @@ namespace Invector.vCharacterController
 
     public class vThirdPersonController : vThirdPersonAnimator
     {
+        bool escPressed;
+
         private void Start()
         {
-            Cursor.lockState = CursorLockMode.Locked;
         }
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape) && escPressed == false)
+            {
                 Cursor.lockState = CursorLockMode.None;
+                escPressed = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape) && escPressed == true)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                escPressed = false;
+            }
         }
 
         public virtual void ControlAnimatorRootMotion()
@@ -68,6 +77,8 @@ namespace Invector.vCharacterController
 
         public virtual void UpdateMoveDirection(Transform referenceTransform = null)
         {
+
+
             if (input.magnitude <= 0.01)
             {
                 moveDirection = Vector3.Lerp(moveDirection, Vector3.zero, (isStrafing ? strafeSpeed.movementSmooth : freeSpeed.movementSmooth) * Time.deltaTime);

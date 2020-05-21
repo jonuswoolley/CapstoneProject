@@ -80,6 +80,7 @@ namespace Invector.vCharacterController
                 _isStrafing = value;
             }
         }
+        //internal bool isAttacking;
         internal bool isGrounded { get; set; }
         internal bool isSprinting { get; set; }
         public bool stopMove { get; protected set; }

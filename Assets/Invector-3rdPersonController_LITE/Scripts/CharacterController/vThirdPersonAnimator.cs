@@ -20,6 +20,7 @@ namespace Invector.vCharacterController
             animator.SetBool(vAnimatorParameters.IsStrafing, isStrafing); ;
             animator.SetBool(vAnimatorParameters.IsSprinting, isSprinting);
             animator.SetBool(vAnimatorParameters.IsGrounded, isGrounded);
+            //animator.SetBool(vAnimatorParameters.IsAttacking, isAttacking);
             animator.SetFloat(vAnimatorParameters.GroundDistance, groundDistance);
 
             if (isStrafing)
@@ -55,6 +56,7 @@ namespace Invector.vCharacterController
         public static int InputHorizontal = Animator.StringToHash("InputHorizontal");
         public static int InputVertical = Animator.StringToHash("InputVertical");
         public static int InputMagnitude = Animator.StringToHash("InputMagnitude");
+        //public static int IsAttacking = Animator.StringToHash("IsAttacking");
         public static int IsGrounded = Animator.StringToHash("IsGrounded");
         public static int IsStrafing = Animator.StringToHash("IsStrafing");
         public static int IsSprinting = Animator.StringToHash("IsSprinting");

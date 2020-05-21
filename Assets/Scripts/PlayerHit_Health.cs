@@ -3,13 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Invector.vCharacterController;
 
 public class PlayerHit_Health : MonoBehaviour
 {
     public Text text;
+    private Animator anim;
+    private Rigidbody rigy;
 
+    public Camera thirdCam;
+
+    public Renderer PlayerRend;
+
+    public Material empty;
     public Material red;
     public Material green;
+    public Material yellow;
 
     public GameObject bottle1;
     public GameObject bottle2;
@@ -22,23 +31,57 @@ public class PlayerHit_Health : MonoBehaviour
     public int attackDamage = 40;
     public LayerMask enemyLayers;
 
+    private bool blocking = false;
+    private bool hitAllowed = true;
+
     private float timestamp;
     public float timeBetweenHits = 0.5f;
 
     // Update is called once per frame
     void Update()
     {
-        if (Time.time >= timestamp && Input.GetMouseButtonDown(0))
+        if (hitAllowed == true && Time.time >= timestamp && Input.GetMouseButtonDown(0))
         {
-            Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
-
-            foreach (Collider enemy in hitEnemies)
-            {
-                enemy.GetComponent<EnemyHit_Health>().TakeDamage(attackDamage);
-            }
-            timestamp = Time.time + timeBetweenHits;
+            Hit();
         }
+        if (Time.time >= timestamp && (Input.GetMouseButtonDown(1)))
+        {
+            Block();
+        }
+        if (Time.time >= timestamp && (Input.GetMouseButtonUp(1)))
+        {
+            BlockUp();
+        }
+    }
 
+    void Block()
+    {
+        rigy.constraints = RigidbodyConstraints.FreezePosition;
+        anim.SetBool("DoBlock", true);
+        blocking = true;
+        hitAllowed = false;
+    }
+
+    void BlockUp()
+    {
+        rigy.constraints = ~RigidbodyConstraints.FreezePosition;
+        anim.SetBool("DoBlock", false);
+        blocking = false;
+        hitAllowed = true;
+    }
+
+    void Hit()
+    {
+        anim.SetTrigger("AttackTrigger");
+        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
+        foreach (Collider enemy in hitEnemies)
+        {
+            if (enemy.GetComponent<EnemyHit_Health>() != null)
+                enemy.GetComponent<EnemyHit_Health>().TakeDamage(attackDamage);
+            else
+                Debug.Log("NoEnemyScriptOn" + gameObject.name);
+        }
+        timestamp = Time.time + timeBetweenHits;
     }
 
     private void OnDrawGizmosSelected()
@@ -57,47 +100,65 @@ public class PlayerHit_Health : MonoBehaviour
 
     void Start()
     {
+        //find rigidBody
+        //find animator
+        rigy = gameObject.GetComponent<Rigidbody>();
+
+        anim = gameObject.GetComponent<Animator>();
+
         currentHealth = PlayerPrefs.GetInt("Health");
         text.text = currentHealth.ToString();
 
         //for when you go through the elevator
-        if (currentHealth < 80)
-            bottle1.GetComponent<Renderer>().material = red;
-        if (currentHealth < 60)
-            bottle2.GetComponent<Renderer>().material = red;
-        if (currentHealth < 40)
-            bottle3.GetComponent<Renderer>().material = red;
-        if (currentHealth < 20)
-            bottle4.GetComponent<Renderer>().material = red;
+        Bottles();
     }
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        PlayerPrefs.SetInt("Health", currentHealth);
-
-        if (currentHealth < 80)
-            bottle1.GetComponent<Renderer>().material = red;
-        if (currentHealth < 60)
-            bottle2.GetComponent<Renderer>().material = red;
-        if (currentHealth < 40)
-            bottle3.GetComponent<Renderer>().material = red;
-        if (currentHealth < 20)
-            bottle4.GetComponent<Renderer>().material = red;
-
-        text.text = currentHealth.ToString();
-
-        if (currentHealth <= 0)
+        if (blocking == true)
         {
-            LoadGame();
+            return;
         }
+            currentHealth -= damage;
+            PlayerPrefs.SetInt("Health", currentHealth);
+
+            StartCoroutine(HurtColor(0.2f, 0.3f));
+
+            Bottles();
+        
+            text.text = currentHealth.ToString();
+
+            if (currentHealth <= 0)
+            {
+                anim.SetBool("DoDie", true);
+            }
     }
 
-    public void LoadGame()
+    void Bottles()
     {
-        Heal();
-        SceneManager.LoadScene(PlayerPrefs.GetInt("Level"));
-        print("Game loaded!");
+        if (currentHealth <= 75)
+            bottle1.GetComponent<Renderer>().material = empty;
+        if (currentHealth <= 50)
+        {
+            bottle2.GetComponent<Renderer>().material = empty;
+            bottle3.GetComponent<Renderer>().material = yellow;
+            bottle4.GetComponent<Renderer>().material = yellow;
+        } 
+        if (currentHealth <= 25)
+        {
+            bottle3.GetComponent<Renderer>().material = empty;
+            bottle4.GetComponent<Renderer>().material = red;
+        }
+        if (currentHealth < 1)
+            bottle4.GetComponent<Renderer>().material = empty;
+    }
+
+    IEnumerator HurtColor(float flashTime, float dmgTime)
+    {
+        yield return new WaitForSeconds(dmgTime);
+        PlayerRend.material.color = Color.red;
+        yield return new WaitForSeconds(flashTime);
+        PlayerRend.material.color = Color.white;
     }
 
     public void Heal()
@@ -112,4 +173,13 @@ public class PlayerHit_Health : MonoBehaviour
         currentHealth = maxHealth;
         text.text = currentHealth.ToString();
     }
+
+    public void LoadGame()
+    {
+        Heal();
+        SceneManager.LoadScene(PlayerPrefs.GetInt("Level"));
+        print("Game loaded!");
+    }
+
+   
 }

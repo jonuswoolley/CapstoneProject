@@ -12,6 +12,7 @@ namespace Invector.vCharacterController
         public KeyCode jumpInput = KeyCode.Space;
         public KeyCode strafeInput = KeyCode.Tab;
         public KeyCode sprintInput = KeyCode.LeftShift;
+        public KeyCode attackInput = KeyCode.Mouse0;
 
         [Header("Camera Input")]
         public string rotateCameraXInput = "Mouse X";
@@ -27,6 +28,9 @@ namespace Invector.vCharacterController
         {
             InitilizeController();
             InitializeTpCamera();
+
+            //lock screen
+            cc.Strafe();
         }
 
         protected virtual void FixedUpdate()
