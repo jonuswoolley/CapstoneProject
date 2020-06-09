@@ -4,5 +4,7 @@ Use W,A,S,D keys to move and shift to sprint. Press Escape anytime to pause.
 *Use 'E' to pull the lever.
 *There is a healing fountain behind this gate. There must be a lever somewhere else to open it.
 *Looks like you took some damage in that last fight. Those bottles represent your health. The only way to get health back is by standing near a healing fountain
-*That is the healing fountain. Stand next to it to get healed.
-*There is a healing fountain up ahead. Walk up to it to be healed.
+*That is the healing fountain. Stand next to it to get healed and save your progress.
+*Pulling that lever must have released some enemies into the temple. Just remember what I've taught you and Good Luck!
+*
+*

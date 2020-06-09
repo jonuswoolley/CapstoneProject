@@ -9,6 +9,7 @@ TagManager:
   - Pillar
   - Enemy
   - Boss
+  - HitThrough
   layers:
   - Default
   - TransparentFX
@@ -20,8 +21,8 @@ TagManager:
   - 
   - Enemy
   - Player
-  - 
-  - 
+  - Trigger
+  - PostProcessing
   - 
   - 
   - 

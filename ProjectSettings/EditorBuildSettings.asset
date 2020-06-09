@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ActualLevels/TutorialArea.unity
     guid: 8566ed55d74624b45b1817b71bf0c0b9
+  - enabled: 1
+    path: Assets/Scenes/ActualLevels/Level_Boss_Room.unity
+    guid: 574e670e9703c8941bb18222d5e88064
   m_configObjects: {}

@@ -14,7 +14,7 @@ public class FireBallDmg : MonoBehaviour
             playerScript = collision.gameObject.GetComponent<PlayerHit_Health>();
             if (playerScript != null)
             {
-                playerScript.TakeDamage(FireballDamage);
+                playerScript.FireBallTakeDamage(FireballDamage);
                 Destroy(gameObject);
             }
             else
@@ -22,7 +22,6 @@ public class FireBallDmg : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Pillar"))
         {
-                Destroy(collision.gameObject);
                 Destroy(gameObject);
         }
         else

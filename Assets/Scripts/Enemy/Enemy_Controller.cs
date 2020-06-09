@@ -9,12 +9,18 @@ public class Enemy_Controller : MonoBehaviour
     public Transform player;
     public Transform[] points;
 
-    private int destPoint = 0;
+    public float DistanceFromPlayer = 3;
+
+    //private int destPoint = 0;
     private NavMeshAgent agent;
+
+    
 
     void Start()
     {
         EnemyAnim = gameObject.GetComponent<Animator>();
+        if (EnemyAnim == null)
+            Debug.Log("EnemyAnim NotFound");
         //player = GameObject.FindWithTag("Player").transform;
 
         agent = GetComponent<NavMeshAgent>();
@@ -47,16 +53,22 @@ public class Enemy_Controller : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            var dist = Vector3.Distance(other.transform.position, gameObject.transform.position);
+            //Debug.Log(dist);
             agent.enabled = true;
             if (player != null)
             {
                 transform.LookAt(player);
+                transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+                EnemyAnim.SetBool("RunningBool", true);
+                agent.destination = player.position;
             }
-            EnemyAnim.SetBool("RunningBool", true);
-            agent.destination = player.position - new Vector3(3.0f, 3.0f, 0.0f);
+            if (dist <= DistanceFromPlayer)
+            {
+                EnemyAnim.SetBool("RunningBool", false);
+                agent.destination = gameObject.transform.position;
+            }
         }
-        else
-            EnemyAnim.SetBool("RunningBool", false);
     }
 
     private void OnTriggerExit(Collider other)
@@ -70,9 +82,20 @@ public class Enemy_Controller : MonoBehaviour
 
     void Update()
     {
-        // Choose the next destination point when the agent gets
-        // close to the current one.
-        //if (!agent.pathPending && agent.remainingDistance < 0.5f)
-            //GotoNextPoint();
+        //transform.LookAt(player);
+    }
+
+    /*
+    public void TurnOffAgent()
+    {
+        agent.enabled = false;
+        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+        Debug.Log("TurnOffAgent");
+    }
+    */
+
+    public void turnOff()
+    {
+        agent.enabled = false;
     }
 }

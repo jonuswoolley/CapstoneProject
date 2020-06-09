@@ -13,7 +13,7 @@ public class CamSwitch : MonoBehaviour
         PlayerRigy.constraints = RigidbodyConstraints.FreezePosition;
         PlayerAnimator.enabled = false;
         PlayerCam.enabled = false;
-        SwitchCam.enabled = true;
+        //SwitchCam.enabled = true;
 
         yield return new WaitForSeconds(waitTime);
 
@@ -21,6 +21,6 @@ public class CamSwitch : MonoBehaviour
         PlayerRigy.constraints = ~RigidbodyConstraints.FreezePosition;
         PlayerAnimator.enabled = true;
         PlayerCam.enabled = true;
-        SwitchCam.enabled = false;
+        //SwitchCam.enabled = false;
     }
 }

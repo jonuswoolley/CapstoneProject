@@ -92,94 +92,6 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!1 &3078338490763073441
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3078338490763073444}
-  - component: {fileID: 3078338490763073442}
-  - component: {fileID: 3078338490763073443}
-  m_Layer: 9
-  m_Name: HealthCam
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &3078338490763073444
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3078338490763073441}
-  m_LocalRotation: {x: 0.14607678, y: -0, z: -0, w: 0.98927325}
-  m_LocalPosition: {x: 0, y: 0, z: -0.71300125}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 3717502695786376876}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 16.799002, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 1.288}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!20 &3078338490763073442
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3078338490763073441}
-  m_Enabled: 0
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 0
-  orthographic size: 5
-  m_Depth: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
---- !u!81 &3078338490763073443
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3078338490763073441}
-  m_Enabled: 1
 --- !u!1 &3717502693877454340
 GameObject:
   m_ObjectHideFlags: 0
@@ -2944,7 +2856,6 @@ RectTransform:
   - {fileID: 3717502695829184480}
   - {fileID: 3717502695433547837}
   - {fileID: 8494399099303237236}
-  - {fileID: 3078338490763073444}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2968,15 +2879,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'QuickRigCharacter_RightToeBase'\n\tTransform
-    'QuickRigCharacter_LeftHand'\n\tTransform 'QuickRigCharacter_RightLeg'\n\tTransform
-    'QuickRigCharacter_Hips'\n\tTransform 'QuickRigCharacter_RightFoot'\n\tTransform
-    'QuickRigCharacter_LeftFoot'\n\tTransform 'QuickRigCharacter_RightHand'\n\tTransform
-    'QuickRigCharacter_LeftArm'\n\tTransform 'QuickRigCharacter_RightForeArm'\n\tTransform
-    'QuickRigCharacter_Spine1'\n\tand more ...\n\tFrom animation clip 'MC_Combo1'\n\tFrom
-    animation clip 'MC_Combo2'\n\tFrom animation clip 'MC_Combo3'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
@@ -2995,7 +2898,7 @@ MonoBehaviour:
   useRootMotion: 0
   rotateByWorld: 0
   useContinuousSprint: 1
-  sprintOnlyFree: 1
+  sprintOnlyFree: 0
   locomotionType: 0
   freeSpeed:
     movementSmooth: 6
@@ -3095,6 +2998,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 0}
+  menu: {fileID: 0}
   thirdCam: {fileID: 0}
   PlayerRend: {fileID: 3717502695316198121}
   empty: {fileID: 2100000, guid: e09c4d554fdd8bb47a897701cd394257, type: 2}
@@ -3105,13 +3009,17 @@ MonoBehaviour:
   bottle2: {fileID: 3717502694536330129}
   bottle3: {fileID: 3717502695692479139}
   bottle4: {fileID: 3717502694037413646}
+  DeathImage: {fileID: 0}
+  WinImage: {fileID: 0}
+  AudioScript: {fileID: 0}
   attackPoint: {fileID: 3717502695433547837}
   attackRange: 3
-  attackDamage: 40
+  attackDamage: 20
   enemyLayers:
     serializedVersion: 2
     m_Bits: 256
-  timeBetweenHits: 0.5
+  timeBetweenHits: 0.7
+  Winning: 0
   maxHealth: 100
   currentHealth: 0
 --- !u!1 &3717502695829184481

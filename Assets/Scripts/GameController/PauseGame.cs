@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PauseGame : MonoBehaviour
 {
@@ -14,7 +15,12 @@ public class PauseGame : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            Time.timeScale = 0;
+
+            //MainMenuCam.tag = "MainCamera";
+
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             //Player.enabled = false;
             PlayerCam.enabled = false;
             PlayerCanvas.enabled = false;

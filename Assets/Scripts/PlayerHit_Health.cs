@@ -11,6 +11,7 @@ public class PlayerHit_Health : MonoBehaviour
     private Animator anim;
     private Rigidbody rigy;
 
+    public MainMenu menu;
     public Camera thirdCam;
 
     public Renderer PlayerRend;
@@ -25,6 +26,12 @@ public class PlayerHit_Health : MonoBehaviour
     public GameObject bottle3;
     public GameObject bottle4;
 
+    public CanvasGroup DeathImage;
+    public CanvasGroup WinImage;
+    float m_Timer;
+
+    public Audio AudioScript;
+
     //public Camera cam;
     public Transform attackPoint;
     public float attackRange = 3f;
@@ -36,6 +43,9 @@ public class PlayerHit_Health : MonoBehaviour
 
     private float timestamp;
     public float timeBetweenHits = 0.5f;
+
+    private bool dying = false;
+    public bool Winning = false;
 
     // Update is called once per frame
     void Update()
@@ -52,11 +62,48 @@ public class PlayerHit_Health : MonoBehaviour
         {
             BlockUp();
         }
+
+        if (dying == true)
+        {
+            StartCoroutine(TimeBeforeDie());
+        }
+
+        if (Winning == true)
+        {
+            StartCoroutine(BeatGameScreen());
+        }
+    }
+
+    IEnumerator TimeBeforeDie()
+    {
+        yield return new WaitForSeconds(2f);
+        m_Timer += Time.deltaTime;
+
+        DeathImage.alpha = m_Timer / 1f;
+
+        if (m_Timer > 1f + 1f)
+        {
+            SceneManager.LoadScene(0);
+        }
+    }
+
+    IEnumerator BeatGameScreen()
+    {
+        yield return new WaitForSeconds(2f);
+        m_Timer += Time.deltaTime;
+
+        WinImage.alpha = m_Timer / 1f;
+
+        if (m_Timer > 1f + 1f)
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 
     void Block()
     {
         rigy.constraints = RigidbodyConstraints.FreezePosition;
+        rigy.constraints = ~RigidbodyConstraints.FreezePositionY;
         anim.SetBool("DoBlock", true);
         blocking = true;
         hitAllowed = false;
@@ -77,10 +124,18 @@ public class PlayerHit_Health : MonoBehaviour
         foreach (Collider enemy in hitEnemies)
         {
             if (enemy.GetComponent<EnemyHit_Health>() != null)
+            {
                 enemy.GetComponent<EnemyHit_Health>().TakeDamage(attackDamage);
+                AudioScript.PlayHitSound();
+            } 
             else
+            {
                 Debug.Log("NoEnemyScriptOn" + gameObject.name);
+                AudioScript.PlayMissHitSound();
+            }
         }
+        if (hitEnemies.Length == 0)
+            AudioScript.PlayMissHitSound();
         timestamp = Time.time + timeBetweenHits;
     }
 
@@ -107,7 +162,6 @@ public class PlayerHit_Health : MonoBehaviour
         anim = gameObject.GetComponent<Animator>();
 
         currentHealth = PlayerPrefs.GetInt("Health");
-        text.text = currentHealth.ToString();
 
         //for when you go through the elevator
         Bottles();
@@ -115,7 +169,7 @@ public class PlayerHit_Health : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (blocking == true)
+        if (blocking == true || dying)
         {
             return;
         }
@@ -125,13 +179,26 @@ public class PlayerHit_Health : MonoBehaviour
             StartCoroutine(HurtColor(0.2f, 0.3f));
 
             Bottles();
-        
-            text.text = currentHealth.ToString();
 
             if (currentHealth <= 0)
-            {
-                anim.SetBool("DoDie", true);
+            { 
+                Die();
             }
+    }
+
+    public void FireBallTakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        PlayerPrefs.SetInt("Health", currentHealth);
+
+        StartCoroutine(HurtColor(0.2f, 0.3f));
+
+        Bottles();
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
     }
 
     void Bottles()
@@ -161,6 +228,14 @@ public class PlayerHit_Health : MonoBehaviour
         PlayerRend.material.color = Color.white;
     }
 
+    void Die()
+    {
+        dying = true;
+        rigy.constraints = RigidbodyConstraints.FreezePosition;
+        gameObject.layer = 1;
+        anim.SetTrigger("DieTrigger");
+    }
+
     public void Heal()
     {
         //reset bottles to green
@@ -171,8 +246,9 @@ public class PlayerHit_Health : MonoBehaviour
 
         PlayerPrefs.SetInt("Health", maxHealth);
         currentHealth = maxHealth;
-        text.text = currentHealth.ToString();
     }
+
+    //Other -------------------------------------------------------------
 
     public void LoadGame()
     {
@@ -180,6 +256,4 @@ public class PlayerHit_Health : MonoBehaviour
         SceneManager.LoadScene(PlayerPrefs.GetInt("Level"));
         print("Game loaded!");
     }
-
-   
 }

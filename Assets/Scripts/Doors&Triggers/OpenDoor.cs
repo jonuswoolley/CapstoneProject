@@ -8,6 +8,9 @@ public class OpenDoor : MonoBehaviour
     public Animator animGate;
     public Animator animLever;
 
+    public GameObject EnemySpawn;
+    public GameObject TutorialEndTrigger;
+
     public GameObject doorCollider;
     public GameObject gateCollider;
     public TextImporter DisplayText;
@@ -36,7 +39,7 @@ public class OpenDoor : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (Input.GetKey(KeyCode.E) && triggerEnter == true)
         {
@@ -44,6 +47,9 @@ public class OpenDoor : MonoBehaviour
 
             animDoor.SetTrigger("OpenDoor");
             Destroy(doorCollider);
+
+            EnemySpawn.SetActive(true);
+            TutorialEndTrigger.SetActive(true);
 
             CamSwitch.StartCoroutine(CamSwitch.SwitchCams(PlayerCam, SwitchCam, waitTime));
 
@@ -54,5 +60,15 @@ public class OpenDoor : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
+
+    public void OpenAllDoors()
+    {
+        animLever.SetTrigger("LeverTrigger");
+
+        animDoor.SetTrigger("OpenDoor");
+        Destroy(doorCollider);
+
+        animGate.SetTrigger("OpenDoor");
+        Destroy(gateCollider);
+    }
 }

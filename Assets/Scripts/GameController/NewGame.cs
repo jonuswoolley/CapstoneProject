@@ -6,13 +6,14 @@ public class NewGame : MonoBehaviour
 {
     //If the new game has been slelected set up player health
 
-    GameObject player;
-    PlayerHit_Health heal;
+    public GameObject player;
+    public PlayerHit_Health heal;
 
     void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        heal = player.GetComponent<PlayerHit_Health>();
-        heal.Heal();
+        //player = GameObject.FindGameObjectWithTag("Player");
+        //heal = player.GetComponent<PlayerHit_Health>();
+        //if (heal != null)
+            heal.Heal();
     }
 }
